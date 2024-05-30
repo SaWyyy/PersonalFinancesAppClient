@@ -1,6 +1,10 @@
+import NavigationBar from "./Navigationbar"
+
 function Main(){
     return(
-        <h1>Logged in</h1>
+        <div>
+            <NavigationBar></NavigationBar>
+        </div>
     )
 }
 
