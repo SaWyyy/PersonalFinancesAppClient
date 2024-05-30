@@ -4,6 +4,7 @@ import Login from "./components/Login";
 //import Index from "./components/Index";
 import Main from "./components/Main";
 import AuthGuard from "./components/AuthGuard";
+import AddItem from "./components/AddItem";
 
 function App() {
   return (
@@ -33,6 +34,12 @@ function App() {
         path="/main"
         element={
           <AuthGuard onAuth={<Main />} onNotAuth={<Navigate to="/login" />} />
+        }
+      />
+       <Route
+        path="/add"
+        element={
+          <AuthGuard onAuth={<AddItem />} onNotAuth={<Navigate to="/login" />} />
         }
       />
     </Routes>

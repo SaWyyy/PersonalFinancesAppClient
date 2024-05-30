@@ -1,5 +1,15 @@
 .header{
+    margin-right: auto;
     padding-left: 200px;
+}
+
+.ml-auto{
+    margin-left: auto !important;
+    margin-right: 200px;
+}
+
+.addButton{
+    padding-right: 200px;
 }
 
 td {
