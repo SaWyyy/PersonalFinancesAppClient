@@ -1,0 +1,86 @@
+import { useEffect, useState } from "react";
+import dataService from "../../services/dataService";
+import { Table } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+
+function TableList() {
+    const [allFinances, setAllFinances] = useState([])
+    const [allFinancesMapped, setAllFinancesMapped] = useState([])
+    const [isLoadingAllFinances, setIsLoadingAllFinances] = useState(true)
+
+    const categoryMap = {
+        1: 'Dom',
+        2: 'Jedzenie',
+        3: 'Transport',
+        4: 'Zdrowie',
+        5: 'Ubrania',
+        6: 'Edukacja',
+        7: 'Relaks',
+        8: 'Zwierzęta',
+        9: 'Prezenty',
+        10: 'Ubezpieczenie'
+    }
+
+    useEffect(() => {
+        dataService.getAllFinances().then((data) => {
+            setAllFinances(data)
+            setAllFinancesMapped(mappedData)
+            setIsLoadingAllFinances(false)
+        })
+    }, [isLoadingAllFinances])
+
+    const mapCategory = (num) => {
+        return categoryMap[num] || "unknown"
+    }
+
+    const mappedData = allFinances.map(item => {
+        return {
+            ...item,
+            category: mapCategory(item.category)
+        }
+    })
+
+    const handleDeleteItem = (id) =>{
+        if(!isLoadingAllFinances){
+            dataService.deleteFinance(id).then(() => {
+                setIsLoadingAllFinances(true)
+            })
+        }
+    }
+
+    return (
+        <div className="containter my-5">
+            <div className="mx-auto rounded border p-4 border-info" style={{ width: "1500px"}}>
+                <Table hover className="rounded-3 overflow-hidden">
+                    <tbody>
+                        <tr className="table-active">
+                            <td>Nazwa</td>
+                            <td>Opis</td>
+                            <td>Kategoria</td>
+                            <td>Wydatek</td>
+                            <td>Data</td>
+                            <td></td>
+                        </tr>
+                        {
+                            allFinancesMapped.map((item) =>
+                                <tr key={item.id}>
+                                    <td>{item.name}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.category}</td>
+                                    <td>{item.price}</td>
+                                    <td>{item.date}</td>
+                                    <td>
+                                        <Button variant="outline-primary" size="sm" className="me-1">Edytuj</Button>
+                                        <Button variant="outline-danger" size="sm" onClick={() => handleDeleteItem(item.id)}>Usuń</Button>
+                                    </td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                </Table>
+            </div>
+        </div>
+    )
+}
+
+export default TableList
