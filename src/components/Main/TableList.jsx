@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import dataService from "../../services/dataService";
 import { Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
 function TableList() {
     const [allFinances, setAllFinances] = useState([])
     const [allFinancesMapped, setAllFinancesMapped] = useState([])
     const [isLoadingAllFinances, setIsLoadingAllFinances] = useState(true)
+    const [selectedItem, setSelectedItem] = useState(null)
+
+    const navigate = useNavigate()
 
     const categoryMap = {
         1: 'Dom',
@@ -40,10 +44,19 @@ function TableList() {
         }
     })
 
-    const handleDeleteItem = (id) =>{
+    const handleDeleteItem = (id) => {
         if(!isLoadingAllFinances){
             dataService.deleteFinance(id).then(() => {
                 setIsLoadingAllFinances(true)
+            })
+        }
+    }
+
+    const handleUpdateItem = (item) => {
+        if(!isLoadingAllFinances){
+            setSelectedItem(item)
+            navigate("/update", {
+                state: {item : item}
             })
         }
     }
@@ -70,7 +83,7 @@ function TableList() {
                                     <td>{item.price}</td>
                                     <td>{item.date}</td>
                                     <td>
-                                        <Button variant="outline-primary" size="sm" className="me-1">Edytuj</Button>
+                                        <Button variant="outline-primary" size="sm" className="me-1" onClick={() => handleUpdateItem(item)}>Edytuj</Button>
                                         <Button variant="outline-danger" size="sm" onClick={() => handleDeleteItem(item.id)}>Usuń</Button>
                                     </td>
                                 </tr>

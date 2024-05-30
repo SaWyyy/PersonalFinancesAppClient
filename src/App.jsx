@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Main from "./components/Main";
 import AuthGuard from "./components/AuthGuard";
 import AddItem from "./components/AddItem";
+import UpdateItem from "./components/UpdateItem"
 
 function App() {
   return (
@@ -40,6 +41,12 @@ function App() {
         path="/add"
         element={
           <AuthGuard onAuth={<AddItem />} onNotAuth={<Navigate to="/login" />} />
+        }
+      />
+      <Route
+        path="/update"
+        element={
+          <AuthGuard onAuth={<UpdateItem />} onNotAuth={<Navigate to="/login" />} />
         }
       />
     </Routes>

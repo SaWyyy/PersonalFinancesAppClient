@@ -57,6 +57,25 @@ export default class dataService {
         }
     }
 
+    static updateFinance = async (id, name, description, category, price) => {
+        try {
+            const res = await axios.put(`${this.ipAddress}/api/Finances/${id}`,
+                {
+                    name: name,
+                    description: description,
+                    category: category,
+                    price: price
+                },
+                {
+                    headers: { Authorization: `Bearer ${this.token}`},
+                }
+            )
+            return res.data
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     static deleteFinance = async (id) => {
         try {
             const res = await axios.delete(`${this.ipAddress}/api/Finances/${id}`,
