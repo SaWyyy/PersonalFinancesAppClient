@@ -1,11 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import dataService from "../services/dataService"
 import { useLocation, useNavigate } from "react-router-dom"
 
 function UpdateItem(){
     const location = useLocation()
-    const item = location.state.item
-    const id = item.id
+	const navigate = useNavigate()
+
+    const item = location.state?.item
+
+	useEffect(() => {
+		if(!item){
+			navigate("/main")
+		}
+	}, [item, navigate])
+
+    const id = item?.id
 
     const categoryMap = {
         'Dom': 1,
@@ -24,16 +33,14 @@ function UpdateItem(){
         return categoryMap[str] || "unknown"
     }
     
-    const [name, setName] = useState(item.name)
-    const [description, setDescriptiton] = useState(item.description)
-    const [category, setCategory] = useState(mapCategory(item.category))
-    const [price, setPrice] = useState(item.price)
+    const [name, setName] = useState(item?.name)
+    const [description, setDescriptiton] = useState(item?.description)
+    const [category, setCategory] = useState(mapCategory(item?.category))
+    const [price, setPrice] = useState(item?.price)
     const [message, setMessage] = useState();
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
 	const [validateErrors, setValidateErrors] = useState([]);
-
-    const navigate = useNavigate()
 
     const handleName = (e) => {
         setName(e.target.value)
