@@ -3,12 +3,14 @@ import dataService from "../../services/dataService";
 import { Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { NavDropdown } from "react-bootstrap";
 
 function TableList({sendData}) {
     const [allFinances, setAllFinances] = useState([])
     const [allFinancesMapped, setAllFinancesMapped] = useState([])
     const [isLoadingAllFinances, setIsLoadingAllFinances] = useState(true)
     const [selectedItem, setSelectedItem] = useState(null)
+    const [pickCategory, setPickCategory] = useState("Default")
 
     const navigate = useNavigate()
 
@@ -64,6 +66,14 @@ function TableList({sendData}) {
         }
     }
 
+    const handlePickCategory = (eventkey) => {
+        setPickCategory(eventkey)
+    }
+
+    const filteredFinances = pickCategory === 'Default'
+        ? allFinancesMapped
+        : allFinancesMapped.filter(item => item.category === pickCategory)
+
     return (
         <div className="containter my-5">
             <div className="mx-auto rounded border p-4 border-info" style={{ width: "1500px"}}>
@@ -72,13 +82,31 @@ function TableList({sendData}) {
                         <tr className="table-active">
                             <td>Nazwa</td>
                             <td>Opis</td>
-                            <td>Kategoria</td>
+                            <td>
+                                <div style={{display: "flex", justifyContent: "center"}}>
+                                <NavDropdown className="dropdown" title="Kategoria" onSelect={handlePickCategory}>
+                                    <div style={{height: "100px", overflowY: "auto"}}>
+                                        <NavDropdown.Item eventKey="Default">Wszystko</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Dom">Dom</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Jedzenie">Jedzenie</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Transport">Transport</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Zdrowie">Zdrowie</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Ubrania">Ubrania</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Edukacja">Edukacja</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Relaks">Relaks</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Zwierzęta">Zwierzęta</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Prezenty">Prezenty</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Ubezpieczenie">Ubezpieczenie</NavDropdown.Item>
+                                    </div>
+                                </NavDropdown>
+                                </div>
+                            </td>
                             <td>Wydatek</td>
                             <td>Data</td>
                             <td></td>
                         </tr>
                         {
-                            allFinancesMapped.map((item) =>
+                            filteredFinances.map((item) =>
                                 <tr key={item.id}>
                                     <td>
                                         <span className="truncate text-truncate">{item.name}</span>

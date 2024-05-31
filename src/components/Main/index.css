@@ -20,3 +20,7 @@
 td {
     text-align: center;
 }
+
+.dropdown{
+    position: fixed !important;
+}
