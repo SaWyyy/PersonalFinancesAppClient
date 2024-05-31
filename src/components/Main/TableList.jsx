@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
-function TableList() {
+function TableList({sendData}) {
     const [allFinances, setAllFinances] = useState([])
     const [allFinancesMapped, setAllFinancesMapped] = useState([])
     const [isLoadingAllFinances, setIsLoadingAllFinances] = useState(true)
@@ -25,10 +25,13 @@ function TableList() {
         10: 'Ubezpieczenie'
     }
 
+
+
     useEffect(() => {
         dataService.getAllFinances().then((data) => {
             setAllFinances(data)
             setAllFinancesMapped(mappedData)
+            sendData(data)
             setIsLoadingAllFinances(false)
         })
     }, [isLoadingAllFinances])

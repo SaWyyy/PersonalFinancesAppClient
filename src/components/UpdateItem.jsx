@@ -78,7 +78,7 @@ function UpdateItem(){
 			setSubmitted(true);
 			setError(false);
 			dataService.updateFinance(id, name, description, Number(category), Number(price)).then((res) => {
-				console.log("Dodano dane");
+				console.log("Edytowano dane");
                 navigate("/main")
 			}).catch((err) => {
 				const status = err.toJSON().status;
