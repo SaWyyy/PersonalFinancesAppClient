@@ -8,6 +8,11 @@
     margin-right: 200px;
 }
 
+.truncate {
+    display: inline-block;
+    max-width: 10rem;
+}
+
 .addButton{
     padding-right: 200px;
 }

@@ -64,7 +64,7 @@ function TableList() {
     return (
         <div className="containter my-5">
             <div className="mx-auto rounded border p-4 border-info" style={{ width: "1500px"}}>
-                <Table hover className="rounded-3 overflow-hidden">
+                <Table hover className="rounded-3 overflow-hidden table">
                     <tbody>
                         <tr className="table-active">
                             <td>Nazwa</td>
@@ -77,10 +77,16 @@ function TableList() {
                         {
                             allFinancesMapped.map((item) =>
                                 <tr key={item.id}>
-                                    <td>{item.name}</td>
-                                    <td>{item.description}</td>
+                                    <td>
+                                        <span className="truncate text-truncate">{item.name}</span>
+                                    </td>
+                                    <td>
+                                        <span className="truncate text-truncate">{item.description}</span>
+                                    </td>
                                     <td>{item.category}</td>
-                                    <td>{item.price}</td>
+                                    <td>
+                                        <span className="truncate text-truncate">{item.price}</span>
+                                    </td>
                                     <td>{item.date}</td>
                                     <td>
                                         <Button variant="outline-primary" size="sm" className="me-1" onClick={() => handleUpdateItem(item)}>Edytuj</Button>
