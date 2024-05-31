@@ -10,12 +10,12 @@ import UpdateItem from "./components/UpdateItem"
 function App() {
   return (
     <Routes>
-      {/* <Route
+      <Route
         path="/"
         element={
-          <AuthGuard onAuth={<Navigate to="/main" />} onNotAuth={<Index />} />
+          <AuthGuard onAuth={<Navigate to="/main" />} onNotAuth={<Navigate to="/register" />} />
         }
-      /> */}
+      />
       <Route
         path="/register"
         element={

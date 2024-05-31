@@ -103,6 +103,9 @@ function Login() {
 							>
 								Zaloguj
 							</button>
+							<a className="btn btn-primary float-end" href="/register">
+								Przejdź do rejestracji
+							</a>
 						</div>
 					</form>
 				</div>
